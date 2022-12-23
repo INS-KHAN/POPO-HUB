@@ -31,8 +31,11 @@ class PopoCrawler:
 
     def lists2json(self, **kwargs):
         rslt = {}
-        for key in kwargs.keys():
-            rslt[i] = {key: list(kwargs(key))[i]}
+        keys = list(kwargs.keys())
+        values = list(kwargs.values())
+        for i in range(len(values[0])):
+            rslt[i] = dict(zip(keys, [x[i] for x in values]))
+        return rslt
 
     def get_list(self, site, page=0):
 
@@ -45,38 +48,18 @@ class PopoCrawler:
                 for x in table.select("a.list_body_href")
             ]
             titles = [x.text for x in table.select("span.link_hover")]
-            rslt = {}
-            for i in range(len(titles)):
-                rslt[i] = {
-                    "id": ids[i],
-                    "title": titles[i],
-                }
-            return rslt
+            return self.lists2json(title=titles, id=ids)
 
         elif site == "dd":
-            resp = requests.get(
-                url=f"{self.list_url['dd']}{page + 1}",
-                headers=self.headers,
-                verify=False,
-            )
+            resp = self.get(url=f"{self.list_url['dd']}{page + 1}", verify=False)
             soup = bs(resp.text, "html.parser")
             links = soup.select(".ed .title-link")
             ids = [urlparse(x.attrs["href"]).path[9:] for x in links]
             titles = [x.text for x in links]
-            rslt = {}
-            for i in range(len(titles)):
-                rslt[i] = {
-                    "id": ids[i],
-                    "title": titles[i],
-                }
-            return rslt
+            return self.lists2json(title=titles, id=ids)
 
         elif site == "tq":
-            resp = requests.get(
-                url=f"{self.list_url['tq']}{page + 1}",
-                headers=self.headers,
-                verify=False,
-            )
+            resp = self.get(url=f"{self.list_url['tq']}{page + 1}", verify=False)
             soup = bs(resp.text, "html.parser")
             item_list = soup.select_one(".list")
             ids = [
@@ -86,30 +69,12 @@ class PopoCrawler:
             titles = [
                 x.text for x in item_list.select("li.title span[class!='category']")
             ]
-            rslt = {}
-            for i in range(len(titles)):
-                rslt[i] = {
-                    "id": ids[i],
-                    "title": titles[i],
-                }
-            return rslt
+            return self.lists2json(title=titles, id=ids)
 
         elif site == "th":
-            resp = requests.get(
-                url=f"{self.list_url['th']}{page + 1}",
-                headers=self.headers,
-            )
+            resp = self.get(url=f"{self.list_url['th']}{page + 1}")
             soup = bs(resp.text, "html.parser")
             links = soup.select("td.subject a")
             ids = [parse_qs(urlparse(x.attrs["href"]).query)["no"][0] for x in links]
             titles = [x.text for x in links]
-            rslt = {}
-            for i in range(len(titles)):
-                rslt[i] = {
-                    "id": ids[i],
-                    "title": titles[i],
-                }
-            return rslt
-
-
-fhc = FamousHumorCrawler()
+            return self.lists2json(title=titles, id=ids)
