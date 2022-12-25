@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    {% include "head.html" %}
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+            {% include "header.html" %}
+        </header>
+        <main class="mdl-layout__content">
+            {% include "main.html" %}
+        </main>
+    </div>
+</body>
+
+<script>
+    function createSnow() {
+        const snow = document.createElement("div")
+        const size = `${Math.random() * 10 + 10}px`
+        snow.classList.add("snow")
+        snow.style.width = size
+        snow.style.height = size
+        snow.style.left = `${Math.random() * window.screen.width}px`
+        snow.style.animation = `fall ${Math.random() * 10 + 10}s linear`
+        snow.style.animationDealy = `${Math.random()}s`
+        snow.style.opacity = Math.random() / 1.5
+        document.body.appendChild(snow)
+        setTimeout(() => { snow.remove() }, 20000)
+    }
+    
+    setInterval(createSnow, 1000);
+</script>
+<style>
+    .snow {
+        position: absolute;
+        top: -20px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        z-index: 3;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(calc(100vh + 20px));
+        }
+    }
+</style>
+
+
+
+</html>

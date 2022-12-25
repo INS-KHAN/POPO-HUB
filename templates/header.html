@@ -1,0 +1,46 @@
+{% block content %}
+
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary">
+    <a href="#panel" class="mdl-layout__tab is-active" onclick="render_board('hu')">HUMOR UNIV</a>
+    <a href="#panel" class="mdl-layout__tab" onclick="render_board('dd')">DOG DRIP</a>
+    <a href="#panel" class="mdl-layout__tab" onclick="render_board('tq')">THEQOO</a>
+    <a href="#panel" class="mdl-layout__tab" onclick="render_board('th')">TODAY HUMOR</a>
+    <a href="javascript:void(0)" class="mdl-layout__tab">
+        <i id="theme" class="material-icons">dark_mode</i>
+    </a>
+</div>
+
+<script>
+
+    function init_toggle_theme_button() {
+        const html = document.documentElement
+        const theme_mode = localStorage.getItem("theme")
+        const theme_icon = document.querySelector("#theme")
+        html.setAttribute("data-theme", theme_mode)
+        if (theme_mode == "light") {
+            theme_icon.textContent = "dark_mode"
+        } else if (theme_mode == "dark") {
+            theme_icon.textContent = "light_mode"
+        }
+
+        theme_icon.parentElement.addEventListener("click", (e) => {
+            switch (theme_icon.textContent) {
+                case "light_mode":
+                    html.setAttribute("data-theme", "light")
+                    localStorage.setItem("theme", "light")
+                    theme_icon.textContent = "dark_mode"
+                    break
+                case "dark_mode":
+                    html.setAttribute("data-theme", "dark")
+                    localStorage.setItem("theme", "dark")
+                    theme_icon.textContent = "light_mode"
+                    break
+            }
+        })
+    }
+
+    init_toggle_theme_button()
+
+</script>
+
+{% endblock %}
