@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -79,6 +79,10 @@
             height: 4px;
         }
 
+        .mdl-layout__tab-bar i {
+            padding: 20px 8px;
+        }
+
 
         .mdl-data-table {
             width: 100%;
@@ -97,52 +101,48 @@
             background-color: #eee;
         }
 
-        @media (prefers-color-scheme: dark) {
+        html[data-theme=dark] {
+            color: #F5F5F5;
+            background-color: #212121;
+        }
 
-            html {
-                color: #F5F5F5;
-                background-color: #212121;
-            }
+        html[data-theme=dark] .mdl-layout.is-upgraded .mdl-layout__tab.is-active {
+            color: #F5F5F5;
+        }
 
-            .mdl-layout.is-upgraded .mdl-layout__tab.is-active {
-                color: #F5F5F5;
-            }
+        html[data-theme=dark] .mdl-layout.is-upgraded .mdl-layout__tab.is-active::after {
+            background-color: #9E9E9E;
+        }
 
-            .mdl-layout.is-upgraded .mdl-layout__tab.is-active::after {
-                background-color: #9E9E9E;
-            }
+        html[data-theme=dark] .mdl-color--primary {
+            background-color: #212121 !important;
+        }
 
-            .mdl-color--primary {
-                background-color: #212121 !important;
-            }
+        html[data-theme=dark] .mdl-data-table {
+            background-color: #424242;
+        }
 
-            .mdl-data-table {
-                background-color: #424242;
-            }
+        html[data-theme=dark] .mdl-data-table tbody tr:hover {
+            background-color: #616161;
+        }
 
-            .mdl-data-table tbody tr:hover {
-                background-color: #616161;
-            }
+        html[data-theme=dark] .visited {
+            background-color: #616161;
+        }
 
-            .visited {
-                background-color: #616161;
-            }
+        html[data-theme=dark] .mdl-button--primary {
+            background-color: #616161 !important;
+        }
 
-            .mdl-button--primary {
-                background-color: #616161 !important;
-            }
+        html[data-theme=dark] .mdl-button--accent {
+            background-color: #9E9E9E !important;
+        }
 
-            .mdl-button--accent {
-                background-color: #9E9E9E !important;
-            }
-
-            .mdl-spinner__layer-1,
-            .mdl-spinner__layer-2,
-            .mdl-spinner__layer-3,
-            .mdl-spinner__layer-4 {
-                border-color: #fafafa;
-            }
-
+        html[data-theme=dark] .mdl-spinner__layer-1,
+        .mdl-spinner__layer-2,
+        .mdl-spinner__layer-3,
+        .mdl-spinner__layer-4 {
+            border-color: #fafafa;
         }
     </style>
 
