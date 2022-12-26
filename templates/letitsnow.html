@@ -1,0 +1,32 @@
+<script>
+    function let_in_snow() {
+        const snow = document.createElement("div")
+        const size = `${Math.random() * 10 + 10}px`
+        snow.classList.add("snow")
+        snow.style.width = size
+        snow.style.height = size
+        snow.style.left = `${Math.random() * window.screen.width}px`
+        snow.style.animation = `fall ${Math.random() * 10 + 10}s linear`
+        snow.style.animationDealy = `${Math.random()}s`
+        snow.style.opacity = Math.random() / 1.5
+        document.body.appendChild(snow)
+        setTimeout(() => { snow.remove() }, 20000)
+    }
+
+    setInterval(let_in_snow, 1000);
+</script>
+<style>
+    .snow {
+        position: absolute;
+        top: -20px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        z-index: 3;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(calc(100vh + 20px));
+        }
+    }
+</style>
