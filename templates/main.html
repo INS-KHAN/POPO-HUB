@@ -1,7 +1,7 @@
 {% block content %}
 
-<section id="panel" class="mdl-layout__tab-panel is-active"></section>
 
+<section id="panel" class="mdl-layout__tab-panel is-active"></section>
 <script>
 
     function create_element(tag, id, text, class_name) {
@@ -13,18 +13,9 @@
     }
 
     function loading(mode = "on") {
-        if (mode == "on") {
-            const dlg = document.createElement("dialog")
-            const div = document.createElement("div")
-            dlg.id = "dialog_spinner"
-            dlg.style.cssText = "border: none; background-color: rgba(255,255,255,0);"
-            div.classList.add("mdl-spinner", "mdl-js-spinner", "is-active")
-            dlg.appendChild(div)
-            document.body.appendChild(dlg)
-            dlg.showModal()
-        } else if (mode == "off") {
-            document.querySelector("#dialog_spinner")?.remove()
-        }
+        const loading_bar = document.querySelector(".mdl-progress")
+        if (mode == "on") { loading_bar.style.display = "block" }
+        else if (mode == "off") { loading_bar.style.display = "none" }
     }
 
     function check_visited_page() {
@@ -40,15 +31,16 @@
             function click_item_cbfn(e) {
                 const url_prefix = {
                     "hu": "http://m.humoruniv.com/board/read.html?table=pds&st=day&number=",
-                    "dd": "https://www.dogdrip.net/dogdrip/"
-
+                    "tq": "https://theqoo.net/index.php?mid=hot&document_srl=",
+                    "dd": "https://www.dogdrip.net/dogdrip/",
+                    "th": "https://m.todayhumor.co.kr/view.php?table=bestofbest&no=",
                 }
                 const site_id = e.target.id
                 localStorage.setItem(site_id, 1)
                 location.href = url_prefix[site_id.split("_")[0]] + site_id.split("_")[1]
             }
 
-            const res = await fetch(`http://192.168.0.14:5000//list/?site=${site}&page=${page}`, { method: 'get', mode: 'cors' })
+            const res = await fetch(`http://127.0.0.1:5000/list/?site=${site}&page=${page}`, { method: 'get', mode: 'cors' })
             const json = await res.json()
             const table_class = "mdl-data-table mdl-js-data-table"
             const td_class = "mdl-data-table__cell--non-numeric"
@@ -99,17 +91,24 @@
             return div
         }
 
-        const table = await gen_table()
-        const panel = document.querySelector("#panel")
-        while (panel.hasChildNodes()) {
-            panel.removeChild(panel.lastChild);
+        loading()
+        try {
+            const table = await gen_table()
+            const panel = document.querySelector("#panel")
+            while (panel.hasChildNodes()) {
+                panel.removeChild(panel.lastChild);
+            }
+            panel.appendChild(table)
+            check_visited_page()
+            document.querySelector(".mdl-layout__content").scrollTop = 0
+            const paging = gen_paging()
+            panel.appendChild(paging)
+            pushing_state && history.pushState({ site: site, page: page }, null, `/?site=${site}&page=${page}`)
+        } catch (err) {
+            alert(err)
+        } finally {
+            loading("off")
         }
-        panel.appendChild(table)
-        check_visited_page()
-        document.querySelector(".mdl-layout__content").scrollTop = 0
-        const paging = gen_paging()
-        panel.appendChild(paging)
-        pushing_state && history.pushState({ site: site, page: page }, null, `/?site=${site}&page=${page}`)
     }
 
     window.addEventListener("popstate", (e) => {

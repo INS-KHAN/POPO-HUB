@@ -6,6 +6,7 @@
 </head>
 
 <body>
+    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
             {% include "header.html" %}
@@ -30,7 +31,7 @@
         document.body.appendChild(snow)
         setTimeout(() => { snow.remove() }, 20000)
     }
-    
+
     setInterval(createSnow, 1000);
 </script>
 <style>

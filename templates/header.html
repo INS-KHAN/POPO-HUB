@@ -10,6 +10,27 @@
     </a>
 </div>
 
+<style>
+    .mdl-progress {
+        display: none;
+        position: fixed;
+        top: 0px;
+        height: 2px;
+        z-index: 4;
+    }
+
+    html[data-theme=dark] .mdl-progress>.bar1 {
+        background-color: #9E9E9E !important;
+    }
+
+    html[data-theme=dark] .mdl-progress>.bar2,
+    html[data-theme=dark] .mdl-progress>.bar3 {
+        background-image: none !important;
+        background-color: #212121 !important;
+    }
+</style>
+
+
 <script>
 
     function init_toggle_theme_button() {
