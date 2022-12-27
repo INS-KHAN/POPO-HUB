@@ -1,7 +1,10 @@
+import warnings
 from urllib.parse import parse_qs, urlparse
 
 import requests
 from bs4 import BeautifulSoup as bs
+
+warnings.filterwarnings(action="ignore")
 
 
 class PopoCrawler:

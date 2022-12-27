@@ -40,7 +40,7 @@
                 location.href = url_prefix[site_id.split("_")[0]] + site_id.split("_")[1]
             }
 
-            const res = await fetch(`http://127.0.0.1:5000/list/?site=${site}&page=${page}`, { method: 'get', mode: 'cors' })
+            const res = await fetch(`${window.location.origin}/list/?site=${site}&page=${page}`)
             const json = await res.json()
             const table_class = "mdl-data-table mdl-js-data-table"
             const td_class = "mdl-data-table__cell--non-numeric"

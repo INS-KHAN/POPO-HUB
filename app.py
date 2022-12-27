@@ -1,5 +1,3 @@
-from urllib.parse import parse_qs, urlparse
-
 from popocrawler import PopoCrawler
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
