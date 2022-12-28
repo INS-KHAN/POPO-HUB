@@ -1,11 +1,9 @@
 from popocrawler import PopoCrawler
 from flask import Flask, jsonify, render_template, request
-from flask_cors import CORS
 
 ppc = PopoCrawler()
 
 app = Flask(__name__)
-CORS(app)
 
 
 @app.route("/")
