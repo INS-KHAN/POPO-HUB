@@ -17,15 +17,20 @@ class PopoCrawler:
         }
 
     def get(self, url, verify=True, encoding=None):
-        resp = requests.get(
+        url_parse = urlparse(url)
+        base_url = f"{url_parse.scheme}://{url_parse.netloc}"
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Linux; Android 10) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/108.0.5359.79 Mobile Safari/537.36"
+            )
+        }
+        sess = requests.Session()
+        sess.get(url=base_url, headers=headers, verify=verify)
+        resp = sess.get(
             url=url,
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (Linux; Android 10) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/108.0.5359.79 Mobile Safari/537.36"
-                )
-            },
+            headers=headers,
             verify=verify,
         )
         if encoding:
@@ -81,3 +86,29 @@ class PopoCrawler:
             ids = [parse_qs(urlparse(x.attrs["href"]).query)["no"][0] for x in links]
             titles = [x.text for x in links]
             return self.lists2json(title=titles, id=ids)
+
+
+import requests
+
+sess = requests.Session()
+sess.get(
+    url="http://m.humoruniv.com/main.html",
+    headers={
+        "User-Agent": (
+            "Mozilla/5.0 (Linux; Android 10) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/108.0.5359.79 Mobile Safari/537.36"
+        )
+    },
+)
+a = sess.get(
+    url="http://m.humoruniv.com/board/list.html?table=pds&st=day&pg=1",
+    headers={
+        "User-Agent": (
+            "Mozilla/5.0 (Linux; Android 10) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/108.0.5359.79 Mobile Safari/537.36"
+        )
+    },
+)
+print(a)
